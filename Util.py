@@ -1,4 +1,5 @@
-# Utility that provides Priority queue and a function that gathers input from user to form the initial board configuration.
+# Utility that provides Priority queue and a function that gathers input from user to form the initial board
+# configuration.
 import heapq
 
 import numpy as np
@@ -36,11 +37,19 @@ class PriorityQueue:
 
 # Reads the input from user and returns a matrix of 3,3 configuration. Uses numpy lib to achieve the necessary function.
 def get_initial():
-    print("Please input the board data- Number must be between 0 - 8")
+    print("Please input the board data - Number must be between 0 - 8")
     initial_board = np.zeros(9, dtype=int)
     for i in range(9):
-        tile = int(input("Enter data for tile " + str(i + 1) + ":- "))
-        initial_board[i] = np.array(tile)
+        try:
+            tile = int(input("Enter data for tile " + str(i + 1) + ":- "))
+            if tile > 8 or tile < 0: # Validate if the input is between 0 and 8, else raises an exception.
+                raise RuntimeError("invalid input")
+            initial_board[i] = np.array(tile)
+        except:
+            print("\n\n")
+            print("==== Please enter a number between 0 -8. Lets start from the beginning. ====")
+            get_initial() # Restarts the program.
+
     return np.reshape(initial_board, (3, 3))
 
 
